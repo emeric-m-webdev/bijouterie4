@@ -1,0 +1,93 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ produit.titre|capitalize }}{% endblock %}
+
+{% block h1 %}{{ produit.titre|capitalize }}{% endblock %}
+
+
+{% block body %}
+
+
+<div class="row">
+   <div class="text-center col-md-6">
+   </div>
+
+   <div class="text-center col-md-6">
+
+   {% if produit.stock %}
+
+   
+   </div>
+
+</div>
+
+    <div class="text-center">
+
+        {% if produit.image %}
+            <img src="{{ asset('images/produit/' ~ produit.image ) }}" alt="" class="img300">
+        {% else %}
+            <img src="{{ asset('images/imageDefault.jpg') }}" alt="" class="img300">
+        {% endif %}
+
+
+        <h4>{{ produit.prix }} €</h4>
+
+        <h4>Description</h4>
+        <p>
+            {% if produit.description %}
+                {{ produit.description|capitalize }}
+            {% else %}
+                Non renseigné
+            {% endif %}
+        </p>
+
+    </div>
+
+
+    <div>
+        <h2 class="text-center">Les avis</h2>
+
+        {% for commentaire in commentaires %}
+            <div class="shadow my-3 p-3">
+
+                <div class="row justify-content-between">
+                    <div class="col-md-3">
+                        <h4>{{ commentaire.user.prenom }}</h4>
+                    </div>
+                    <div class="col-md-3">
+                        <h4 class="fst-italic">{{ commentaire.dateAt|date("d/m/Y H:i:s") }}</h4>
+                    </div>
+                </div>
+                
+                <h4>{{ commentaire.message }}</h4>
+            </div>
+        {% else %}
+            <h4 class="text-info">Soyez le premier à laisser votre avis</label></h4>
+        {% endfor %}
+
+
+        {% for notification in app.flashes('success') %}
+            <div class="text-center fst-italic text-success">
+                {{ notification }}
+            </div>
+        {% endfor %}
+
+        {% if app.user %}
+
+            {{ form_start(form) }}
+                {{ form_row(form.message) }}
+                <input type="submit" value="Ajouter" class="btn btn-success col-12 mt-3">
+            {{ form_end(form) }}
+
+        {% else %}
+            <h4 class="text-center text-danger fst-italic mt-3">Veuillez vous 
+                <a href="{{ path('app_login') }}">connecter</a>
+             ou vous 
+                <a href="{{ path('app_register') }}">inscrire</a>
+             pour déposer votre message</h4>
+        {% endif %}
+
+    
+    </div>
+
+{% endblock %}

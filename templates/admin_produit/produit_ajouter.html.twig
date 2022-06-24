@@ -1,0 +1,107 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Ajouter un produit{% endblock %}
+
+{% block h1 %}Ajouter un produit{% endblock %}
+
+{% block body %}
+
+
+    <a class="btn btn-dark my-3" href="{{ path('produit_afficher') }}">Retour</a>
+
+    <div class="col-md-6 mx-auto">
+
+        {# {{ form(formProduit) }} #}
+        {#
+            La fonction twig form() permet d'appeler entièrement le formulaire : de la balise ouvrante <form> à la balise fermante </form>
+        #}
+
+        {{ form_start(formProduit) }} {# balise ouvrante <form> #}
+
+            <div class="row">
+                <div class="col-md-6">
+                    {{ form_row(formProduit.titre) }}
+                    {# {{ form_row(formProduit.prix, {'label' : "jkhjkuhjk", 'attr' : {"class" : "bg-danger"}} ) }} #}
+
+
+
+                    {#
+                        form_row() = form_label() + form_errors() + form_widget() + form_help()
+                        {{ form_label(formProduit.prix) }}
+                        {{ form_errors(formProduit.prix) }}
+                        {{ form_widget(formProduit.prix) }}
+                        {{ form_help(formProduit.prix) }}
+                        ---------------------------------
+
+                        php  [ 'key' => 'value']
+                        twig { 'key' : "value"}
+                    #}
+
+                </div>
+
+                <div class="col-md-6">
+                    {{ form_row(formProduit.prix) }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    {{ form_row(formProduit.categorie) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(formProduit.marque) }}
+                </div>
+            </div>
+            
+            {{ form_row(formProduit.matiere) }}
+
+            {{ form_row(formProduit.description) }}
+
+            {{ form_row(formProduit.image) }}
+            <div id="zone" class="text-center"></div>
+
+
+            {# {{ form_rest(formProduit) }} #}
+
+            <input type="submit" value="Ajouter" class="btn btn-success col-12 mt-3">
+
+        {{ form_end(formProduit) }} {# balise fermante </form> #}
+
+        
+    </div>
+
+
+
+    {# 
+    <input type="submit" value="Ajouter" class="btn btn-success col-12 mt-3">
+    <button type="submit"  class="btn btn-success col-12 mt-3">Ajouter</button> 
+    #}
+
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $('#produit_matiere').select2({
+            placeholder: 'Sélectionner une matière'
+        });
+
+
+        let zone = $("#zone");
+
+        function loadFile(event)
+        {
+            console.log("test");
+
+            zone.html("");
+           let image = document.createElement("img");
+           image.setAttribute("src", URL.createObjectURL(event.target.files[0]) );
+           image.setAttribute("class", "img300" );
+
+            zone.append(image);
+
+
+        }
+
+
+    </script>
+{% endblock %}

@@ -1,0 +1,90 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Modification {{ produit.titre|capitalize }} {% endblock %}
+
+{% block h1 %}Modification {{ produit.titre|capitalize }} {% endblock %}
+
+{% block body %}
+
+    
+
+
+    <a class="btn btn-dark my-3" href="{{ path('produit_afficher') }}">Retour</a>
+
+
+    {% include "_flashes.html.twig" %}
+
+    <div class="col-md-6 mx-auto">
+        {{ form_start(formProduit) }}
+
+            <div class="row">
+
+                <div class="col-md-6">
+                    {{ form_row(formProduit.titre) }}
+                </div>
+
+                <div class="col-md-6">
+                    {{ form_row(formProduit.prix) }}
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    {{ form_row(formProduit.categorie) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(formProduit.marque) }}
+                </div>
+            </div>
+
+            {{ form_row(formProduit.matiere) }}
+
+            {{ form_row(formProduit.description) }}
+
+
+            {{ form_row(formProduit.imageUpdate) }}
+            <div id="zone" class="text-center">
+
+                {% if produit.image %}
+                    <img src="{{ asset('images/produit/' ~ produit.image) }}" alt="" class="img300">
+                    <a href="{{ path('produit_image_supprimer', {'id' : produit.id })  }}" onclick="return confirm('Etes-vous sûr de vouloir supprimer cette image ?');">
+                        <i class="text-danger" data-feather="trash-2"></i>
+                    </a>
+                {% endif %}
+                
+            </div>
+
+
+            <input type="submit" value="Modifier" class="btn btn-info col-12 mt-3">
+
+        {{ form_end(formProduit) }}
+    </div>
+
+{% endblock %}
+
+
+{% block javascripts %}
+    <script>
+        $('#produit_matiere').select2({
+            placeholder: 'Sélectionner une matière'
+        });
+
+
+         let zone = $("#zone");
+
+        function loadFile(event)
+        {
+            console.log("test");
+
+            zone.html("");
+           let image = document.createElement("img");
+           image.setAttribute("src", URL.createObjectURL(event.target.files[0]) );
+           image.setAttribute("class", "img300" );
+
+            zone.append(image);
+
+
+        }
+    </script>
+{% endblock %}

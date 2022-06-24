@@ -1,0 +1,47 @@
+{% extends "base.html.twig" %}
+
+
+{% block title %}Page d'accueil{% endblock %}
+
+
+{% block h1 %}Bienvenue{% endblock %}
+
+
+
+{% block body %}
+
+
+
+    <div class="text-center">
+        <img src="{{ asset('images/home.jpg') }}" alt="" class="img50vw">
+    </div>
+
+    {#
+    
+        Dans la variable d'environnement app il y a user
+        qui est null s'il n'y a pas d'utilisateur connecté
+        et qui est un objet issu de la class entity User si l'utilisateur est connecté
+        
+    #}
+    {% if app.user %}
+        <h4>{{ app.user.prenom|italic }}</h4>
+    {% else %}
+        <h4>Non connecté</h4>
+    {% endif %}
+
+
+
+
+    {{ ageTwig }}
+
+    {% if ageTwig >= 18 %}
+        <h4>Tu es majeur</h4>
+    {% else %}
+        <h4>Tu es mineur</h4>
+    {% endif %}
+
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam libero facilis laboriosam nobis? Eum perferendis, culpa neque ipsum dolor nostrum, sed quo est dicta nisi temporibus magni quidem maiores quod fuga, voluptatum a. Voluptatum voluptas natus sit tempore ex architecto asperiores reprehenderit quo repellat, veniam nostrum cum distinctio sint nam?</p>
+
+
+{% endblock %}
+

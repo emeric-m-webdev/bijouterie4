@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ categorie.nom|capitalize }}{% endblock %}
+
+{% block h1 %}{{ categorie.nom|capitalize }}{% endblock %}
+
+{% block body %}
+
+    <a class="btn btn-dark" href="{{ path('app_admin_categorie_index') }}">Retour</a>
+    
+    <table class="table table-striped table-hover text-center mt-3">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ categorie.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ categorie.nom }}</td>
+            </tr>
+
+        </tbody>
+    </table>
+
+    {% for produit in categorie.produits %}
+        <div>{{ produit.titre }}</div>
+    {% endfor %}
+
+
+{% endblock %}

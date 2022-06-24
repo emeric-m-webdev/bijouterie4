@@ -1,0 +1,99 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Catalogue{% endblock %}
+
+{% block h1 %}Catalogue{% endblock %}
+
+
+{% block body %}
+    <div class="shadow p-2">
+        {{ form_start(form) }}
+
+            <div class="row">
+                <div class="col-md-6">
+                    {{ form_row(form.recherche) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(form.order) }}
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-6">
+                    {{ form_row(form.min) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(form.max) }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    {{ form_row(form.categories) }}
+                </div>
+                <div class="col-md-4">
+                    {{ form_row(form.marques) }}
+                </div>
+                <div class="col-md-4">
+                    {{ form_row(form.matieres) }}
+                </div>
+            </div>
+
+            <div class="row mt-2">
+            
+                <div class="col-md-9">
+                    <input type="submit" value="Filtrer ({{ count }})" class="btn btn-dark col-12">
+                </div>
+                <div class="col-md-3">
+                    <a class="btn btn-primary col-12" href="{{ path("catalogue") }}">Reset</a>
+                </div>
+
+            </div>
+            
+
+        {{ form_end(form) }}
+    </div>
+
+
+    {% if produits %}
+        
+
+        <div class="row justify-content-between">
+
+            {% for produit in produits %}
+
+                <div class="text-center p-4 col-lg-3 col-md-4 m-4" style="box-shadow: 2px 2px 4px ">
+                    <h3>{{ produit.titre|capitalize }}</h3>
+
+                    <div>
+                        {% if produit.image %}
+                            <img src="{{ asset('images/produit/' ~ produit.image ) }}" alt="" class="img150">
+                        {% else %}
+                            <img src="{{ asset('images/imageDefault.jpg') }}" alt="" class="img150">
+                        {% endif %}
+                    </div>
+
+                    <h4>{{ produit.prix }} €</h4>
+
+                    <h6 class="fst-italic">{{ produit.marque.nom }} </h6>
+                    <h6 class="fst-italic">{{ produit.categorie.nom }} </h6>
+
+                    <a class="btn btn-primary col-12 text-white" href="{{ path('fiche_produit' , {'id' : produit.id }) }}">
+                        Fiche produit
+                    </a>
+                </div>
+                    
+            {% endfor %}
+
+        </div>
+
+
+
+
+    {% else %}
+        <h4 class="text-danger fst-italic text-center mt-3">Aucun résultat</h4>
+    {% endif %}
+
+
+{% endblock %}

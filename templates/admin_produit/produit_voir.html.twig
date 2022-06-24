@@ -1,0 +1,114 @@
+{% extends "base.html.twig" %}
+
+
+{% block title %}{{ produit.titre|capitalize }}{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        th{
+            width: 200px;
+        }
+    </style>
+{% endblock %}
+
+
+{% block h1 %}{{ produit.titre|capitalize }}{% endblock %}
+
+
+{% block body %}
+
+    <a class="btn btn-dark my-3" href="{{ path('produit_afficher') }}">Retour</a>
+
+    <table class="table table-striped table-hover text-center mt-3">
+
+        <tr>
+            <th>ID</th>
+            <td>{{ produit.id }}</td>
+        </tr>
+
+        <tr>
+            <th>Titre</th>
+            <td>{{ produit.titre|capitalize }}</td>
+        </tr>
+
+        <tr>
+            <th>Prix</th>
+            <td>{{ produit.prix }} €</td>
+        </tr>
+
+        <tr>
+            <th>Catégorie</th>
+            <td>
+                {% if produit.categorie %}
+                    {{ produit.categorie.nom|capitalize }}
+                {% else %}
+                    <span class="text-danger fst-italic">Aucune catégorie</span>
+                {% endif %}
+                
+            </td>
+        </tr>
+
+        <tr>
+            <th>Marque</th>
+            <td>
+                {% if produit.marque %}
+                    {{ produit.marque.nom|capitalize }}
+                {% else %}
+                    <span class="text-danger fst-italic">Aucune marque</span>
+                {% endif %}
+                
+            </td>
+        </tr>
+
+        <tr>
+            <th>
+                {% if produit.matiere|length > 1 %}
+                    Matières
+                {% else %}
+                    Matière
+                {% endif %}
+            </th>
+            <td>
+                {% if produit.matiere|length > 0 %}
+                    {% for matiere in produit.matiere %}
+                        {{ matiere.nom|capitalize }}{% if not loop.last %},{% endif %}
+                    {% endfor %}
+                {% else %}
+                    <span class="text-danger fst-italic">Aucune matière</span>
+                {% endif %}
+                
+            </td>
+        </tr>
+
+        <tr>
+            <th>Description</th>
+            <td>
+                {% if produit.description %}
+                    {{ produit.description|capitalize }}
+                {% else %}
+                    <span class="text-danger fst-italic">Aucune description</span>
+                {% endif %}
+                
+            </td>
+        </tr>
+
+        <tr>
+            <th>image</th>
+            <td>
+                {% if produit.image %}
+                    <img src="{{ asset('images/produit/' ~ produit.image ) }}" alt="" class="img300">
+                {% else %}
+                    <img src="{{ asset('images/imageDefault.jpg') }}" alt="" class="img300">
+                {% endif %}
+            </td>
+        </tr>
+
+        <tr>
+            <th>Date d'enregistrement</th>
+            <td>{{ produit.dateAt|date("l d F Y H:i:s") }}</td>
+        </tr>
+    
+    </table>
+
+
+{% endblock %}
